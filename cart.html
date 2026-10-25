@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e0f2fe 0%, #ede9fe 50%, #fce7f3 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .cart-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 850px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+            padding: 35px 30px;
+            margin: auto;
+        }
+
+        .cart-title {
+            text-align: center;
+            color: #4338ca;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        thead tr {
+            background-color: #3949ab;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        thead th {
+            padding: 14px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        thead th:first-child {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #f1f5f9;
+            transition: background-color 0.15s ease;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f5f9;
+        }
+
+        tbody td {
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #334155;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .book-name-cell {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .cart-book-thumb {
+            width: 46px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+            flex-shrink: 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .book-title-text {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 14px;
+        }
+
+        .qty-input {
+            width: 60px;
+            padding: 6px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .qty-input:focus {
+            border-color: #6366f1;
+        }
+
+        .btn-remove {
+            background-color: #ef4444;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .btn-remove:hover {
+            background-color: #dc2626;
+        }
+
+        .btn-remove:active {
+            transform: scale(0.97);
+        }
+
+        .total-container {
+            text-align: right;
+            margin-top: 25px;
+            padding-right: 5px;
+        }
+
+        .total-text {
+            color: #312e81;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .actions-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn-continue {
+            background-color: #e0e7ff;
+            color: #3730a3;
+            border: 1px solid #c7d2fe;
+            padding: 9px 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-continue:hover {
+            background-color: #c7d2fe;
+        }
+
+        .btn-clear {
+            background-color: #ef4444;
+            color: #ffffff;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-clear:hover {
+            background-color: #dc2626;
+        }
+
+        .btn-checkout {
+            background-color: #10b981;
+            color: #ffffff;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .btn-checkout:hover {
+            background-color: #059669;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .empty-cart-icon {
+            font-size: 55px;
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+
+        .empty-cart-text {
+            font-size: 18px;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="cart-card">
+    <div class="cart-title">
+        <span>🛒</span> Shopping Cart
+    </div>
+
+    <div id="cart-content">
+        <!-- Dynamically rendered content -->
+    </div>
+</div>
+
+<script>
+    const CART_KEY = 'bookstore_cart';
+
+    const defaultImages = {
+        'ai': 'images/ai.jpg',
+        'html in 24 hours': 'images/html.jpg',
+        'xml bible': 'images/xml.jpg',
+        'java 2': 'images/java.jpg',
+        'web technologies': 'images/wt.jpg',
+        'php & mysql web development': 'images/php.jpg',
+        'c&ds': 'images/cds.jpg',
+        'c & data structures': 'images/cds.jpg',
+        'ads': 'images/ads.jpg',
+        'advanced data structures': 'images/ads.jpg',
+        'java': 'images/java.jpg',
+        'oracle': 'images/oracle.jpg',
+        'ms sql server': 'images/sqlserver.jpg',
+        'mysql': 'images/mysql.jpg'
+    };
+
+    function getCart() {
+        const stored = localStorage.getItem(CART_KEY);
+        try {
+            return stored ? JSON.parse(stored) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    }
+
+    function formatCurrency(num) {
+        return '₹' + Number(num).toFixed(2);
+    }
+
+    function updateQuantity(index, newQty) {
+        let cart = getCart();
+        let qty = parseInt(newQty, 10);
+        if (isNaN(qty) || qty < 1) {
+            qty = 1;
+        }
+        cart[index].quantity = qty;
+        saveCart(cart);
+        renderCart();
+    }
+
+    function removeItem(index) {
+        let cart = getCart();
+        cart.splice(index, 1);
+        saveCart(cart);
+        renderCart();
+    }
+
+    function clearCart() {
+        if (confirm("Are you sure you want to clear all items from the cart?")) {
+            localStorage.removeItem(CART_KEY);
+            renderCart();
+        }
+    }
+
+    function proceedToCheckout() {
+        window.location.href = 'order.html';
+    }
+
+    function renderCart() {
+        const cart = getCart();
+        const container = document.getElementById('cart-content');
+
+        if (!cart || cart.length === 0) {
+            container.innerHTML = `
+                <div class="empty-cart">
+                    <div class="empty-cart-icon">🛒</div>
+                    <div class="empty-cart-text">Your cart is currently empty!</div>
+                    <a href="catalogue.html" class="btn-continue" style="display:inline-block; font-size:14px; padding:10px 22px;">Browse Catalogue →</a>
+                </div>
+            `;
+            return;
+        }
+
+        let total = 0;
+        let rowsHtml = '';
+
+        cart.forEach((item, index) => {
+            const price = parseFloat(item.price) || 0;
+            const quantity = parseInt(item.quantity, 10) || 1;
+            const amount = price * quantity;
+            total += amount;
+
+            const nameKey = (item.name || '').trim().toLowerCase();
+            const imgSrc = item.image || defaultImages[nameKey] || 'images/Books.jpg';
+
+            rowsHtml += `
+                <tr>
+                    <td>
+                        <div class="book-name-cell">
+                            <img src="${imgSrc}" class="cart-book-thumb" alt="${item.name}" onerror="this.src='images/Books.jpg'">
+                            <span class="book-title-text">${item.name}</span>
+                        </div>
+                    </td>
+                    <td>${formatCurrency(price)}</td>
+                    <td>
+                        <input type="number" class="qty-input" min="1" value="${quantity}" 
+                               onchange="updateQuantity(${index}, this.value)" 
+                               oninput="updateQuantity(${index}, this.value)">
+                    </td>
+                    <td>${formatCurrency(amount)}</td>
+                    <td>
+                        <button class="btn-remove" onclick="removeItem(${index})">Remove</button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        container.innerHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Book Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${rowsHtml}
+                </tbody>
+            </table>
+
+            <div class="total-container">
+                <span class="total-text">Total: ${formatCurrency(total)}</span>
+            </div>
+
+            <div class="actions-container">
+                <a href="catalogue.html" class="btn-continue">Continue Shopping →</a>
+                <button class="btn-clear" onclick="clearCart()">Clear Cart</button>
+                <button class="btn-checkout" onclick="proceedToCheckout()">Checkout</button>
+            </div>
+        `;
+    }
+
+    window.onload = renderCart;
+</script>
+
+</body>
+</html>

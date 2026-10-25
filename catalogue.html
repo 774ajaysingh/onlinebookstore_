@@ -1,0 +1,141 @@
+<html>
+<head>
+<title> Catalogue </title>
+<script>
+function addToCart(bookName, price, image) {
+    const CART_KEY = 'bookstore_cart';
+    let cart = [];
+    try {
+        const stored = localStorage.getItem(CART_KEY);
+        if (stored) cart = JSON.parse(stored);
+    } catch (e) {
+        cart = [];
+    }
+
+    const existingIndex = cart.findIndex(item => item.name.toLowerCase() === bookName.toLowerCase());
+    if (existingIndex > -1) {
+        cart[existingIndex].quantity = (parseInt(cart[existingIndex].quantity, 10) || 1) + 1;
+        if (!cart[existingIndex].image && image) {
+            cart[existingIndex].image = image;
+        }
+    } else {
+        cart.push({
+            name: bookName,
+            price: parseFloat(price),
+            quantity: 1,
+            image: image
+        });
+    }
+
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    window.location.href = 'cart.html';
+}
+</script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #e2e8f0;
+    }
+    .book-cover {
+        width: 80px;
+        height: 95px;
+        object-fit: cover;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+        display: block;
+        margin: auto;
+    }
+    .btn-add {
+        background-color: #ff9800;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.2s;
+    }
+    .btn-add:hover {
+        background-color: #f57c00;
+    }
+</style>
+</head>
+<body bgcolor="pink">
+<h2 style="text-align: center; color: #1e293b; margin-bottom: 20px;">Book Catalogue</h2>
+
+<table>
+<tr>
+<td width="110" align="center">
+<img src="images/wt.jpg" class="book-cover" alt="Web Technologies"/>
+</td>
+<td><b>Book:</b> Web Technologies <br><b>Author:</b> Uttam K. Roy <br><b>Publication:</b> Oxford University Press</td> 
+<td width="100" align="center"><b style="color:#2563eb; font-size:16px;">₹531.00</b></td>
+<td width="130" align="center">
+<input type="button" class="btn-add" value="Add to cart" onclick="addToCart('Web Technologies', 531, 'images/wt.jpg')"/>
+</td> 
+</tr>
+<tr>
+<td width="110" align="center">
+<img src="images/php.jpg" class="book-cover" alt="PHP & MySQL"/>
+</td>
+<td><b>Book:</b> PHP & MySQL Web Development <br><b>Author:</b> Luke Welling & Laura Thompson <br><b>Publication:</b> PEARSON</td> 
+<td width="100" align="center"><b style="color:#2563eb; font-size:16px;">₹898.00</b></td>
+<td width="130" align="center">
+<input type="button" class="btn-add" value="Add to cart" onclick="addToCart('PHP & MySQL Web Development', 898, 'images/php.jpg')"/>
+</td> 
+</tr>
+<tr>
+<td width="110" align="center">
+<img src="images/xml.jpg" class="book-cover" alt="XML Bible"/>
+</td>
+<td><b>Book:</b> XML Bible <br><b>Author:</b> Winston <br><b>Publication:</b> Wiley</td> 
+<td width="100" align="center"><b style="color:#2563eb; font-size:16px;">₹40.50</b></td>
+<td width="130" align="center">
+<input type="button" class="btn-add" value="Add to cart" onclick="addToCart('XML Bible', 40.50, 'images/xml.jpg')"/>
+</td> 
+</tr>
+<tr>
+<td width="110" align="center">
+<img src="images/ai.jpg" class="book-cover" alt="AI"/>
+</td>
+<td><b>Book:</b> AI <br><b>Author:</b> S. Russel <br><b>Publication:</b> Princetonhall</td> 
+<td width="100" align="center"><b style="color:#2563eb; font-size:16px;">₹63.00</b></td>
+<td width="130" align="center">
+<input type="button" class="btn-add" value="Add to cart" onclick="addToCart('AI', 63.00, 'images/ai.jpg')"/>
+</td> 
+</tr>
+<tr>
+<td width="110" align="center">
+<img src="images/java.jpg" class="book-cover" alt="Java 2"/>
+</td>
+<td><b>Book:</b> Java 2 <br><b>Author:</b> Watson <br><b>Publication:</b> BPBpublications</td> 
+<td width="100" align="center"><b style="color:#2563eb; font-size:16px;">₹35.50</b></td>
+<td width="130" align="center">
+<input type="button" class="btn-add" value="Add to cart" onclick="addToCart('Java 2', 35.50, 'images/java.jpg')"/>
+</td> 
+</tr>
+<tr>
+<td width="110" align="center">
+<img src="images/html.jpg" class="book-cover" alt="HTML in 24 hours"/>
+</td>
+<td><b>Book:</b> HTML in 24 hours <br><b>Author:</b> Sam Peter <br><b>Publication:</b> Sampublication</td> 
+<td width="100" align="center"><b style="color:#2563eb; font-size:16px;">₹50.00</b></td>
+<td width="130" align="center">
+<input type="button" class="btn-add" value="Add to cart" onclick="addToCart('HTML in 24 Hours', 50.00, 'images/html.jpg')"/>
+</td> 
+</tr>
+</table>
+</body> 
+</html>
